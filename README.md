@@ -1,2 +1,4 @@
 # jobplus8-10
-[nttzl](https://github.com/nttzl)
+
+* [genxixiche](https://gibhub.com/lisisharand)
+* [nttzl](https://github.com/nttzl)
