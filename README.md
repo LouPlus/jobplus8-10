@@ -1,4 +1,5 @@
 # jobplus8-10
+<<<<<<< HEAD
 
 * [genxixiche](https://github.com/lisisharand)
 * [nttzl](https://github.com/nttzl)
@@ -6,3 +7,4 @@
 * [Schnee](https://github.com/kkkxy)
 * [凌公子文](https://github.com/lingxiaojun)
 
+======
