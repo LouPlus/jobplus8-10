@@ -1,4 +1,4 @@
-from flask-sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 db = SQLAlchemy()
@@ -29,7 +29,7 @@ class User(Base):
     company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='SET NULL'))
     company = db.relationship('Company')
     resume_url = db.Column(db.String(64))
-    jobs = db.relationship('Job',secondary='user-job')
+    jobs = db.relationship('Job',secondary='user_job')
 
 class Company(Base):
     __tablename__ = 'company'
