@@ -1,9 +1,9 @@
-from flask import FLASK, render_template
-from config import configs
-from models import db,User,Company,Position
+from flask import Flask, render_template
+from .config import configs
+from .models import db,User,Company,Job,Delivery
 
 def create_app(config):
-    app = FLASK(__name__)
+    app = Flask(__name__)
     app.config.from_object(configs.get(config))
     db.init_app(app)
     register_blueprints(app)

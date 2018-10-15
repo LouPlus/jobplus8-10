@@ -5,13 +5,13 @@ db = SQLAlchemy()
 
 class Base(db.Model):
     __abstract__ = True
-    created_at = db.Column(db.Datetime,default=datetime.utcnow)
-    updated_at = db.Column(db.Datetime,default=datetime.utcnow,onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime,default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime,default=datetime.utcnow,onupdate=datetime.utcnow)
 
 user_job = db.Table(
         'user_job',
-        db.Column('user_id',db.Integer,db.ForeignKey(user.id,ondelete='CASCADE')),
-        db.Column('job_id',db.Integer,db.ForeignKey(job.id,ondelete='CASCADE'))
+        db.Column('user_id',db.Integer,db.ForeignKey('user.id',ondelete='CASCADE')),
+        db.Column('job_id',db.Integer,db.ForeignKey('job.id',ondelete='CASCADE'))
         )
 
 class User(Base):
@@ -43,7 +43,7 @@ class Company(Base):
     stack = db.Column(db.String(64))
     finance = db.Column(db.String(8))
     location = db.Column(db.String(64))
-    job = db.ralation('Job')
+    job = db.relationship('Job')
 
 
 class Job(Base):
@@ -56,11 +56,11 @@ class Job(Base):
     location = db.Column(db.String(16))
     is_fulltime = db.Column(db.Boolean,default=True)
     is_open = db.Column(db.Boolean,default=True)
-    description = db.Column(db.text)
-    requirement = db.Column(db.text)
+    description = db.Column(db.Text)
+    requirement = db.Column(db.Text)
 
     company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='SET NULL'))
-    company = db.relationship('Company',userlist=False)
+    company = db.relationship('Company',uselist=False)
     
 class Delivery(Base):
     __tablename__ = 'delivery'
