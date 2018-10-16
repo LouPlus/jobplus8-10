@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from werkzeug.security import generate_password_hash,check_password_hash
 
 db = SQLAlchemy()
 
@@ -31,6 +32,30 @@ class User(Base):
     resume_url = db.Column(db.String(64))
     jobs = db.relationship('Job',secondary='user_job')
 
+    def __repr__():
+        return '<user:{}>'.format(self.name)
+
+    @property
+    def password(self):
+        return self._password
+
+    @password.setter
+    def password(self,orig_password):
+        self._password = generate_password_hash(orig_password)
+
+    def check_password(self,password):
+        return check_password_hash(self._password,password)
+
+    @property
+    def is_admin(self):
+        return self.role == ROLE_ADMIN
+
+    @property
+    def is_company(self):
+        return self.role == ROLE_COMPANY
+
+
+
 class Company(Base):
     __tablename__ = 'company'
 
@@ -47,7 +72,7 @@ class Company(Base):
 
 
 class Job(Base):
-    __tablename__ = 'position'
+    __tablename__ = 'job'
 
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(16),nullable=False)
