@@ -57,7 +57,7 @@ class UserProfileForm(FlaskForm):
             raise ValidationError('Please Input Valid Number')
 
     def updated_profile(self, user):
-        user.real_name = self.real_name.data
+        user.name = self.real_name.data
         user.email = self.email.data
         if self.password.data:
             user.password = self.password.data

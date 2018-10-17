@@ -26,6 +26,8 @@ class User(Base):
     name = db.Column(db.String(32),nullable=False,unique=True,index=True)
     email = db.Column(db.String(64),nullable=False,unique=True,index=True)
     _password = db.Column('password',db.String(256),nullable=False)
+    phone = db.Column(db.Integer)
+    work_years = db.Column(db.Integer)
     role = db.Column(db.SmallInteger,default=ROLE_USER)
     company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='SET NULL'))
     company = db.relationship('Company')
