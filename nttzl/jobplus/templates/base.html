@@ -23,21 +23,45 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Job</a></li>
-                <li><a href="#">Company</a></li>
+                  <li class="active">><a href="#">Job<span class="sr-only">(current)</span></a></li>
+                  <li class="active">><a href="#">Company<span class="sr-only">(current)</span></a></li>
+                  {% if current_user.is_authenticated and current_user.is_admin %}
+                  <li><a href="{{ url_for('admin.index')}}">Admin</a></li>
+                  {% endif %}
               </ul>
               
               <ul class="nav navbar-nav navbar-right">
+                  {% if not current_user.is_authenticated %}
                   <li><a href="{{url_for('front.companyregister')}}">Company register</a></li>
                 <li><a href="{{ url_for('front.userregister')}}">User register</a></li>
-                <li><a href="#">Login</a></li>
-              </ul>
+                <li><a href="{{ url_for('front.login'}}">Login</a></li>
+                {% else %}
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="username">{{ current_user.name}}</span><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">My Profile</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="{{ url_for('front.logout') }}">Logout</a></li></ul>
+                </li>
+                {% endif %}
+             </ul>
+
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
         </nav>
 
         <div class="container">
+        <% with messages = get_flashed_messages(with_categories=true) %)
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+        {% endwith %}
+
             {% block body %}{% endblock %}
             {% block footer %}{% endblock %}
         </div>

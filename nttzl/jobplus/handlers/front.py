@@ -8,9 +8,19 @@ front = Blueprint('front',__name__)
 def index():
     return render_template('index.html')
 
-@front.route('/login')
+@front.route('/login', method=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        login_user(user, form.remember_me.data)
+        next = 'user.profile'
+        if user.is_admin:
+            next = 'admin.index'
+        elif user.is_company:
+            next = 'company.profile'
+        return redirect(url_for(next))
+    return render_template('login.html', form=form)
 
 @front.route('/companyregister',methods=['GET','POST'])
 def companyregister():

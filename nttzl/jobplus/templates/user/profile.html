@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h2>Edit Personal Profile</h2>
+{{ render_form(form, url_for('user.profile')) }}
+{% endblock %}
