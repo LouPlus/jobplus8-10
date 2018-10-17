@@ -34,7 +34,7 @@
                   {% if not current_user.is_authenticated %}
                   <li><a href="{{url_for('front.companyregister')}}">Company register</a></li>
                 <li><a href="{{ url_for('front.userregister')}}">User register</a></li>
-                <li><a href="{{ url_for('front.login'}}">Login</a></li>
+                <li><a href="{{ url_for('front.login')}}">Login</a></li>
                 {% else %}
                 <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="username">{{ current_user.name}}</span><span class="caret"></span></a>
