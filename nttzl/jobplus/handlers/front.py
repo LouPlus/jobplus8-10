@@ -1,4 +1,5 @@
-from flask import Blueprint,render_template
+from flask import Blueprint,render_template,url_for,redirect,flash
+from models import RegisterForm,LoginForm
 
 front = Blueprint('front',__name__)
 
@@ -14,4 +15,11 @@ def login():
 def company_register():
     return render_template('register.html')
 
-#@front.route('/user-register')
+@front.route('/userregister',methods=['GET','POST'])
+def userregister():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        form.create_user()
+        flash('register success','success')
+        return redirect(url_for('.login'))
+    return render_template('userregister.html',form=form)
