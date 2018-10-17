@@ -1,5 +1,5 @@
 from flask import Blueprint,render_template,url_for,redirect,flash
-from models import RegisterForm,LoginForm
+from jobplus.forms import RegisterForm,LoginForm
 
 front = Blueprint('front',__name__)
 

@@ -16,7 +16,7 @@ class LoginForm(FlaskForm):
     
     def validate_password(self, field):
         user = User.query.filter_by(email=self.emial.data).first()
-        if user and not user.check_password(field.data)
+        if user and not user.check_password(field.data):
             raise ValidationError('密码错误')
 
 class RegisterForm(FlaskForm):
