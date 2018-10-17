@@ -8,7 +8,7 @@ front = Blueprint('front',__name__)
 def index():
     return render_template('index.html')
 
-@front.route('/login', method=['GET', 'POST'])
+@front.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
