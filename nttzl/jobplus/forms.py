@@ -10,7 +10,7 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Submit')
 
-    def validate_emaill(self, field):
+    def validate_email(self, field):
         if not User.query.filter_by(email=field.data).first():
             raise ValidationError('该邮箱未注册')
     
