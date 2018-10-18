@@ -10,7 +10,7 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Submit')
 
-    def validate_emaill(self, field):
+    def validate_email(self, field):
         if not User.query.filter_by(email=field.data).first():
             raise ValidationError('该邮箱未注册')
     
@@ -57,7 +57,7 @@ class UserProfileForm(FlaskForm):
             raise ValidationError('Please Input Valid Number')
 
     def updated_profile(self, user):
-        user.real_name = self.real_name.data
+        user.name = self.real_name.data
         user.email = self.email.data
         if self.password.data:
             user.password = self.password.data
