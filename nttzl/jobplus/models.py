@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from flask_login import UserMixin
 from werkzeug.security import generate_password_hash,check_password_hash
 
 db = SQLAlchemy()
@@ -15,7 +16,7 @@ user_job = db.Table(
         db.Column('job_id',db.Integer,db.ForeignKey('job.id',ondelete='CASCADE'))
         )
 
-class User(Base):
+class User(Base, UserMixin):
     __tablename__ = 'user'
 
     ROLE_USER = 10
