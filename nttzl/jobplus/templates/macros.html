@@ -3,14 +3,14 @@
     {{ form.csrf_token }}
     {% for field in form %}
     <!--csrf_token-->
-      {% if field.type == 'CSRFTokenField '%}
-      {{''}}
-      {% elif field.type == 'SubmitField'%}
-      {{form.submit(class='btn btn-primary',type='submit')}}
-      {% elif field.type == 'BooleanField'%}
-      <div class="checkbox">
+      {% if field.type == 'CSRFTokenField' %}
+        {{''}}
+      {% elif field.type == 'SubmitField' %}
+        {{form.submit(class='btn btn-primary',type='submit')}}
+      {% elif field.type == 'BooleanField' %}
+        <div class="checkbox">
           <label >{{ field()}} {{ field.label.text }}</label>
-      </div>
+        </div>
       {% else %}
       <div class="form-group {% if field.errors %}has-error{% endif %}">
           {{field.label}}{{field(class='form-control') }}
@@ -19,12 +19,9 @@
             <span class="help-block">{{error}}</span>
             {% endfor %}
           {% endif %}
-
       </div>
-
       {% endif %}
-
-     {% endfor %}
+      {% endfor %}
 </form>
 {% endmacro %}
 
@@ -35,9 +32,9 @@
         <div class="caption">
             <a href="{{url_for('job.detail',job_id=job.id)}}">
             <b>{{job.name}}</b>
-            <p>experience{{job.experience_requirement}}{% if job.experience_requiremnet != '不限'%}年｛% endif %｝学历{{job.degree_requirement}}</p>
+            <p>experience {{ job.experience_requirement }} {% if job.experience_requiremnet != '不限'%}Year{% endif %}学历{{job.degree_requirement}}</p>
             {% for tag in job.tag_list %}
-            <span class="label label-default ">{{tag }}</span>
+            <span class="label label-default ">{{ tag }}</span>
             {% endfor %}
             </a>
         </div>
@@ -74,7 +71,7 @@
         <span class=ellipsis>?</span>
       {% endif%}
     {% endfor %}
-    <li{% if not pagination.has_next %} class="disabled"{% endif%}><a href="{{url_for(endpoint,page=pagination.next_num) of pagination.has_next else '#'}}">&raquo;</a></li>
+    <li{% if not pagination.has_next %} class="disabled"{% endif %}><a href="{{url_for(endpoint,page=pagination.next_num) if pagination.has_next else '#'}}">&raquo;</a></li>
     </ul>
 </nav>
 {% endmacro %}
