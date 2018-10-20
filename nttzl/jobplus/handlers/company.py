@@ -17,14 +17,14 @@ def index():
 
 @company.route('/profile/', methods=['GET', 'POST'])
 @login_required
-def profile()
+def profile():
     if not current_user.is_company:
         flash('You are not Company User', 'warning')
         return redirect(url_for('front.index'))
     form = CompanyProfileForm(obj=current_user.company_detail)
     form.name.data = current_user.name
     form.email.data = current_user.email
-    if form.validate_profile(current_user)
+    if form.validate_on_submit():
         form.updated_profile(current_user)
         flash('Company Info Updated', 'success')
         return redirect(url_for('front.index'))
