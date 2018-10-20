@@ -1,4 +1,4 @@
-class BaseConfig():
+class BaseConfig(object):
     TEMPLATES_AUTO_RELOAD=True
     SQLALCHEMY_TRACK_MODIFICATIONS=False
     SECRET_KEY='\xf1\x9e\x96\x1e\xf2\x82A\x11\xd9%\x99?\x9bP\xb3\x0f,\xd6\xd5\xeb\xc2\xb6\xd6\x1b'

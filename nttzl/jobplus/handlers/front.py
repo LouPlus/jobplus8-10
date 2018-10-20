@@ -1,12 +1,19 @@
 from flask import Blueprint,render_template,url_for,redirect,flash
 from jobplus.forms import RegisterForm,LoginForm
 from jobplus.models import User,db,Job
+from flask_login import login_user, logout_user, login_required
 
 front = Blueprint('front',__name__)
 
 @front.route('/')
 def index():
-    return render_template('index.html')
+    newest_jobs = Job.query.order_by(Job.created_at.desc()).limit(9)
+    newest_companies = User.query.filter(User.role==User.ROLE_COMPANY).order_by(User.created_at.desc()).limit(8)
+    return render_template('index.html',
+            active='index',
+            newest_jobs=newest_jobs,
+            newest_companies=newest_companies,
+            )
 
 @front.route('/login', methods=['GET', 'POST'])
 def login():
@@ -43,3 +50,11 @@ def userregister():
         flash('register success','success')
         return redirect(url_for('.login'))
     return render_template('userregister.html',form=form)
+
+@front.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Logout', 'success')
+    return redirect(url_for('.index'))
+
