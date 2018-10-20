@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from .config import configs
-from .models import db,User,Company,Job,Delivery
+from .models import db, User,Company,Job,Delivery
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
