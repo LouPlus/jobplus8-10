@@ -1,4 +1,4 @@
-from flask import Blueprint,request,current)app,redirect,url_for,flash
+from flask import Blueprint,request,current_app,redirect,url_for,flash
 from jobplus.decorators import admin_required
 from jobplus.models import User,db
 from jobplus.forms import RegisterForm,UserEditForm,CompanyEditForm
