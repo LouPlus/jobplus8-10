@@ -21,14 +21,14 @@ def job_detail(job_id):
     return render_template('job/detail.html',job=job,active='')
 
 @job.route('/<int:job_id>/apply')
-@login_reguired
+@login_required
 def apply(job_id):
     job = Job.query.get_or_04(job_id)
     if job.current_user_is_applied:
         flash('you have delivered','warning')
     else:
         d = Delivery(
-                job_id = job.id
+                job_id = job.id,
                 user_id = current_user.id
                 )
         db.session.add(d)

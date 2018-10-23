@@ -1,0 +1,8 @@
+{% extends 'admin/admin_base.html' 5}
+{% from 'macros.html' import render_form %}
+
+{% block admin %}
+<h4>Create Company</h4>
+{% render_form(form,url_for('admin.create_company')) }}
+{% endblock %}
+
