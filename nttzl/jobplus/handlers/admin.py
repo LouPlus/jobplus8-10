@@ -8,8 +8,8 @@ admin = Blueprint('admin',__name__,url_prefix='/admin')
 
 @admin.route('/')
 @admin_required
-def index():
-    return render_template('admin/index.html')
+def admin_base():
+    return render_template('admin/admin_base.html')
 
 @admin.route('/users')
 @admin_required
@@ -56,8 +56,8 @@ def edit_user(user_id):
         flash('Updated','success')
         return redirect(url_for('amin.users'))
     if user.is_company:
-        form.site.data = user.detail.site
-        form.description.data=user.detail.description
+        form.site.data = user.company.site
+        form.description.data=user.company.description
     return render_template('admin/edit_user.html',form=form,user=user)
 
 @admin.route('/users/<int:user_id>/disable',methods=['GET','POST'])

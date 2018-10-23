@@ -1,0 +1,61 @@
+{% extends 'admin/admin_base.html' %}
+{% from 'macros.html' import render_pagination %}
+
+{% block title %}Admin - users{% endblock %}
+
+{% block operation %}
+<a href="{{ url_for('admin.create_user') }}" type='button' class='btn btn-primary'>
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    Add User
+</a>
+
+<a href="{{ url_for('admin.create_company') }}" type='button' class='btn btn-primary'>
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    Add Company
+</a>
+
+{% endbock %}
+
+{% block admin %}
+<table class='table'>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>TYPE</th>
+            <th>EMAIL</th>
+            <th>TEL</th>
+            <th>Real name</th>
+            <th>SITE</th>
+            <th>OPERATION</th>
+        </tr>
+    </tbody>
+        <tr>
+            {% for user in pagination.items %}
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{% if user.is_company %}Company{% elif %}User{% endif %}</td>
+            <td>{{ user.email }}</td>
+            <td>{% if user.phone %}{{ user.phone }}{% else %}{% endif %}</td>
+            <td>{% if user.real_name %}{{ user.real_name }}{% else %}{% endif %}</td>
+            <td>{% if user.is_company %}{{ user.company.site }}{% endif %}</td>
+            <td>
+                <div class='btn group' role='group'>
+                    <a href="{{ url_for('admin.edit_user',user_id=user.id) }}" type="button" class="btn btn-default" title="Edit">
+                        Edit
+                    </a>
+                    <a href="{{ url_for('admin.disable_user', user_id=user.id) }}" type="button" class="btn btn-default">
+                        {% if user.is_disable %}Enable{% else %}Disable{% endif %}
+                    </a>
+                </div>
+            </td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </thead>
+</table>
+{{ render_pagination(pagination,'admin.users') }}
+{% endblock %}
+
+
+
