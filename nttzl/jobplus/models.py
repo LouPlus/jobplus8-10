@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from flask_login import UserMixin
+from flask_login import UserMixin,current_user
 from werkzeug.security import generate_password_hash,check_password_hash
 
 db = SQLAlchemy()
@@ -90,6 +90,11 @@ class Job(Base):
     company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='SET NULL'))
     company = db.relationship('Company',uselist=False)
     
+    @property
+    def current_user_is_applied(self):
+        d = Deliver.query.filter_by(job_id=self.id,user_id=current_user.id).first()
+        return (d is not None)
+
 class Delivery(Base):
     __tablename__ = 'delivery'
     

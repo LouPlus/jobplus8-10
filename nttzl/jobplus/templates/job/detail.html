@@ -6,14 +6,14 @@
   <div class="container">
     <div class="col-md-8">
       <h2>{{ job.name }}</h2>
-      <p><span class="job-salary">{{ job.salary_low }}-{{ job.salary_high }}</span>&nbsp;??{{ job.experience_requirement }} {% if job.experience_requirement != '??' %}?{% endif %} ??{{ job.degree_requirement }}</p>
+      <p><span class="job-salary">{{ job.salary_low }}-{{ job.salary_high }}</span>&nbsp;experience{{ job.experience_requirement }} {% if job.experience_requirement != 'no limit' %}year{% endif %} degree{{ job.degree_requirement }}</p>
     </div>
     <div class="col-md-4">
       {% if current_user.is_authenticated %}
         {% if not job.current_user_is_applied %}
-          <a href="{{ url_for('job.apply', job_id=job.id) }}"class="btn btn-success btn-lg dilivery-btn">????</a>
+          <a href="{{ url_for('job.apply', job_id=job.id) }}"class="btn btn-success btn-lg dilivery-btn">deliver resume</a>
         {% else %}
-          <a href="#"class="btn btn-success btn-lg dilivery-btn" disabled="disabled">???</a>
+          <a href="#"class="btn btn-success btn-lg dilivery-btn" disabled="disabled">delivered</a>
         {% endif %}
       {% endif %}
     </div>
@@ -24,10 +24,10 @@
 {% block body %}
 <div class="col-md-8">
   <div class="job-detail">
-    <h3>????</h3> <br>
+    <h3>tags</h3> <br>
     <p>{{ job.tags }}</p>
     <br>
-    <h3>????</h3> <br>
+    <h3>description</h3> <br>
     <p>{{ job.description }}</p>
   </div>
 </div>
@@ -43,8 +43,8 @@
 </div>
 
   <h4>{{ job.company.name }}</h4>
-  <p>???{{ job.company.detail.field }}</p>
-  <p>???{{ job.company.detail.finance_stage }}</p>
-  <p>???{{ job.company.detail.location }}</p>
+  <p>field{ job.company.detail.field }}</p>
+  <p>finance stage{{ job.company.detail.finance_stage }}</p>
+  <p>location{{ job.company.detail.location }}</p>
 </div>
 {% endblock %}
