@@ -119,7 +119,7 @@ class CompanyEditForm(FlaskForm):
     phone = StringField("phone")
     site = StringField("CompanySite",validators=[Length(0,64)])
     desctiption = StringField("description",validators=[Length(0,100)])
-    submit = Submit("submit")
+    submit = SubmitField("submit")
     def update(self,company):
         company.name = self.name.data
         company.email = self.email.data
