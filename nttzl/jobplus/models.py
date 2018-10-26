@@ -31,11 +31,15 @@ class User(Base, UserMixin):
     real_name = db.Column(db.String(16))
     work_years = db.Column(db.Integer)
     role = db.Column(db.SmallInteger,default=ROLE_USER)
-#    company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='SET NULL'))
-    company = db.relationship('Company',uselist=False)
-    is_disable = db.Column(db.Boolean,default=False)
     resume_url = db.Column(db.String(64))
-    jobs = db.relationship('Job',secondary='user_job')
+    #generate_resume
+    resume = db.relationship('Resume',uselist=False)
+    collect_jobs = db.relationship('Job',secondary=user_job)
+#    company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='SET NULL'))
+#    company = db.relationship('Company',uselist=False)
+#company_user
+    is_disable = db.Column(db.Boolean,default=False)
+    detail = db.relationship('CompanyDetail',uselist=False)
 
     def __repr__():
         return '<user:{}>'.format(self.name)
@@ -58,22 +62,32 @@ class User(Base, UserMixin):
     @property
     def is_company(self):
         return self.role == ROLE_COMPANY
+    @property
+    def is_staff(self):
+        return self.role == ROLE_USER
 
 
-
-class Company(Base):
-    __tablename__ = 'company'
+class CompanyDetail(Base):
+    __tablename__ = 'company_detail'
 
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(64),nullable=False,unique=True,index=True)
     site = db.Column(db.String(64))
+    about = db.Column(db.String(1024))
     description = db.Column(db.Text)
-    logo_url = db.Column(db.String(64))
-    tags = db.Column(db.String(64))
+    logo = db.Column(db.String(64))
+    tags = db.Column(db.String(128))
+    team_introduction = db.Column(db.String(256))
+    welfares = db.Column(db.String(256))
+    field = db.Column(db.String(128))
     stack = db.Column(db.String(64))
-    finance = db.Column(db.String(8))
+    finance_stage  = db.Column(db.String(128))
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id',obdelet="SET NULL"))
+    user = db.relationship('User',uselist=False,backref=db.backref('company_detail',uselist=False))
+
     location = db.Column(db.String(64))
-    job = db.relationship('Job')
+    def __repr__(self):
+        return '<CompanyDetail {}>'.format(self.id)
 
 
 class Job(Base):
