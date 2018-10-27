@@ -91,13 +91,47 @@ class CompanyProfileForm(FlaskForm):
         if self.password.data:
             user.password = self.password.data
 
-        if user.company_detail:
-            company_detail = user.company.detail
+        if user.detail:
+            detail  = user.detail
         else:
-            company_detail = CompanyDetail()
-            company_detail.user_id = user.id
-        self.populate_obj(company_detail)
+            detail = CompanyDetail()
+            detail.user_id = user.id
+        self.populate_obj(company.detail)
         db.session.add(user)
-        db.session.add(company_detail)
+        db.session.add(detail)
         db.session.commit()
-
+class UserEditForm(FlaskForm):
+    email = StringField("email",validators=[Required(),Email()])
+    password = PasswordField("password")
+    real_name = StringField("name")
+    phone = StringField("phone")
+    submit = SubmitField("submit")
+    def update(self,user):
+        self.populate_obj(user)
+        if self.password.data:
+            user.password = self.password.data
+        db.session.add(user)
+        db.session.commit()
+class CompanyEditForm(FlaskForm):
+    name = StringField("CompanyName")
+    email = StringField("email",validators=[Required(),Email()])
+    password = PasswordField("password")
+    phone = StringField("phone")
+    site = StringField("CompanySite",validators=[Length(0,64)])
+    desctiption = StringField("description",validators=[Length(0,100)])
+    submit = SubmitField("submit")
+    def update(self,company):
+        company.name = self.name.data
+        company.email = self.email.data
+        if self.password.data:
+            company.password = self.password.data
+        if company.detail:
+            detail = company.detail
+        else:
+            detail = CompanyDetial()
+            detail.user_id = company.id
+        detail.site = self.site.data
+        detail.description = self.description.data
+        db.session.add(company)
+        db.session.add(detail)
+        db.session.commit()
