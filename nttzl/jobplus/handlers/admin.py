@@ -1,4 +1,4 @@
-from flask import Blueprint,request,current_app,redirect,url_for,flash
+from flask import Blueprint,render_template,request,current_app,redirect,url_for,flash
 from jobplus.decorators import admin_required
 from jobplus.models import User,db
 from jobplus.forms import RegisterForm,UserEditForm,CompanyEditForm
@@ -8,7 +8,7 @@ admin = Blueprint('admin',__name__,url_prefix='/admin')
 
 @admin.route('/')
 @admin_required
-def admin_base():
+def index():
     return render_template('admin/admin_base.html')
 
 @admin.route('/users')
@@ -54,7 +54,7 @@ def edit_user(user_id):
     if form.validate_on_submit():
         form.update(user)
         flash('Updated','success')
-        return redirect(url_for('amin.users'))
+        return redirect(url_for('admin.users'))
     if user.is_company:
         form.site.data = user.company.site
         form.description.data=user.company.description

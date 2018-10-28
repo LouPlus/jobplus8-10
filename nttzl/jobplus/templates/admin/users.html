@@ -14,7 +14,7 @@
     Add Company
 </a>
 
-{% endbock %}
+{% endblock %}
 
 {% block admin %}
 <table class='table'>
@@ -30,11 +30,11 @@
             <th>OPERATION</th>
         </tr>
     </tbody>
-        <tr>
             {% for user in pagination.items %}
+            <tr>
             <td>{{ user.id }}</td>
             <td>{{ user.name }}</td>
-            <td>{% if user.is_company %}Company{% elif %}User{% endif %}</td>
+            <td>{% if user.is_company %}Company{% else %}User{% endif %}</td>
             <td>{{ user.email }}</td>
             <td>{% if user.phone %}{{ user.phone }}{% else %}{% endif %}</td>
             <td>{% if user.real_name %}{{ user.real_name }}{% else %}{% endif %}</td>
@@ -49,8 +49,8 @@
                     </a>
                 </div>
             </td>
-            {% endfor %}
         </tr>
+            {% endfor %}
         </tbody>
     </thead>
 </table>

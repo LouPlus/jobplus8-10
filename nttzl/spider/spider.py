@@ -11,7 +11,7 @@ class LagouSpider(object):
 
     @property
     def headers(self):
-        return(
+        return{
                 'Accept': 'application/json, text/javascript, */*; q=0.01',
                 'Accept-Encoding': 'gzip, deflate, br',
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -22,7 +22,7 @@ class LagouSpider(object):
                 'X-Anit-Forge-Code': '0',
                 'X-Anit-Forge-Token': 'None',
                 'X-Requested-With': 'XMLHttpRequest'
-                )
+                }
 
     def formdata(self, page):
         return {
@@ -60,7 +60,7 @@ class FakerData(object):
             except:
                 db.session.rollback()
                 continue
-            d = CompanyDetail(
+            d = Company(
                     logo='https://static.lagou.com/thumbnail_160x160/' + company['companyLogo'],
                     site='https://shiyanlou.com',
                     location=company['city'],
