@@ -30,6 +30,9 @@
             {% if current_user.is_authenticated and current_user.is_admin %}
             <li><a href="{{ url_for('admin.index') }}">Control Panel</li>
             {% endif %}
+            {% if current_user.is_authenticated and current_user.is_company %}
+            <li class="{% if active == 'admin' %}active{% endif %}"><a href="{{ url_for('company.admin_index', company_id=current_user.id) }}">Company Admin<span class="sr-only">(current)</span></a></li>
+            {% endif %}
 
         </ul>
         <ul class="nav navbar-nav navbar-right">

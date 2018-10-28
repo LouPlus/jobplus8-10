@@ -47,6 +47,12 @@ class User(Base, UserMixin):
 
     def __repr__(self):
         return '<User:{}>'.format(self.name)
+    
+    @property
+    def enable_jobs(self):
+        if not self.is_company:
+            raise AttributeError('User has no attribute enable_jobs')
+        return self.jobs.filter(Job.is_disable.is_(False))
 
     @property
     def password(self):
