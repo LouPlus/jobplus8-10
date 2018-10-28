@@ -23,7 +23,7 @@ def job_detail(job_id):
 @job.route('/<int:job_id>/apply')
 @login_required
 def apply(job_id):
-    job = Job.query.get_or_04(job_id)
+    job = Job.query.get_or_404(job_id)
     if job.current_user_is_applied:
         flash('you have delivered','warning')
     else:
@@ -34,6 +34,6 @@ def apply(job_id):
         db.session.add(d)
         db.session.commit()
         flash('successfully delivered','success')
-    return redirect(url_for(job.detail,job_id=job.id))
+    return redirect(url_for('job.job_detail',job_id=job.id))
 
 

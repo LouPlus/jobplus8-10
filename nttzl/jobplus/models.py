@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -170,6 +170,10 @@ class Job(Base):
     def tag_list(self):
         return self.tags.split(',')
 
+    @property
+    def current_user_is_applied(self):
+        d = Delivery.query.filter_by(job_id=self.id, user_id=current_user.id).first()
+        return (d is not None)
 
 class Delivery(Base):
     __tablename__ = 'delivery'
