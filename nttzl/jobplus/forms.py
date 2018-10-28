@@ -94,9 +94,9 @@ class CompanyProfileForm(FlaskForm):
         if user.detail:
             detail  = user.detail
         else:
-            detail = CompanyDetail()
+            detail = Company()
             detail.user_id = user.id
-        self.populate_obj(company.detail)
+        self.populate_obj(detail)
         db.session.add(user)
         db.session.add(detail)
         db.session.commit()
