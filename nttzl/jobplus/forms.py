@@ -15,7 +15,7 @@ class LoginForm(FlaskForm):
             raise ValidationError('该邮箱未注册')
     
     def validate_password(self, field):
-        user = User.query.filter_by(email=self.emial.data).first()
+        user = User.query.filter_by(email=self.email.data).first()
         if user and not user.check_password(field.data):
             raise ValidationError('密码错误')
 
@@ -31,7 +31,7 @@ class RegisterForm(FlaskForm):
             raise ValidationError('Username Exists')
 
     def validate_email(self, field):
-        if User.query.filter_by(email=fild.data).first:
+        if User.query.filter_by(email=field.data).first():
             raise ValidationError('Email Exists')
 
     def create_user(self):
