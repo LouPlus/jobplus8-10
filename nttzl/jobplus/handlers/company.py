@@ -21,7 +21,7 @@ def profile():
     if not current_user.is_company:
         flash('You are not Company User', 'warning')
         return redirect(url_for('front.index'))
-    form = CompanyProfileForm(obj=current_user.company_detail)
+    form = CompanyProfileForm(obj=current_user.company)
     form.name.data = current_user.name
     form.email.data = current_user.email
     if form.validate_on_submit():
@@ -31,19 +31,17 @@ def profile():
     return render_template('company/profile.html', form=form)
 
 @company.route('/<int:company_id>')
-def company_detail(company_id):
+def detail(company_id):
     company = User.query.get_or_404(company_id)
     if not company.is_company:
         abort(404)
-    else:
-        return render_template('company/detail.html',company=company,active='',panel='about')
+    return render_template('company/detail.html',company=company,active='',panel='about')
 
-@company.route('/<int:company_id>/job')
+@company.route('/<int:company_id>/jobs')
 def company_jobs(company_id):
     company = User.query.get_or_404(company_id)
     if not company.is_company:
         abort(404)
-    else:
-        return render_template('company/detail.html',company=company,active='',panel='job')
+    return render_template('company/detail.html', company=company, active='',panel='job')
 
 
