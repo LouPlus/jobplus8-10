@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, PasswordField, SubmitField, BooleanField, ValidationError, IntegerField, TextField
+from wtforms import StringField, SelectField, TextAreaField, PasswordField, SubmitField, BooleanField, ValidationError, IntegerField, TextField
 from jobplus.models import db, User, Company
 from wtforms.validators import Required,Length,Email,EqualTo
 
@@ -135,3 +135,47 @@ class CompanyEditForm(FlaskForm):
         db.session.add(company)
         db.session.add(detail)
         db.session.commit()
+
+class JobForm(FlaskForm):
+    name = StringField('Job Name')
+    salary_low = IntegerField('Lowest Salary')
+    salary_high = IntegerField('Highest Salary')
+    location = StringField('Work Location')
+    tags = StringField('Job Tags(Seperate with ,)')
+    experience_requirement = SelectField(
+            'Experience Requirement(Year)',
+            choices=[
+                ('NoLimit', 'NoLimit'),
+                ('1', '1'),
+                ('2', '2'),
+                ('3', '3'),
+                ('1-3','1-3'),
+                ('3-5','3-5'),
+                ('5+','5+')
+                ]
+            )
+    degree_requirement = SelectField(
+            'Degree Requirement',
+            choices=[
+                ('NoLimit', 'NoLimit'),
+                ('Master', 'Master'),
+                ('PhD', 'PhD')
+                ]
+            )
+    description = TextAreaField('Job Description', validators=[Length(0, 1500)])
+    submit = SubmitField('Submit')
+
+    def create_job(self, company):
+        job = Job()
+        self.populate_obj(job)
+        job.company_id = company.id
+        db.session.add(job)
+        db.session.commit()
+        return job
+
+    def update_job(self, job):
+        self.populate_obj(job)
+        db.session.add(job)
+        db.session.commit()
+        return job
+

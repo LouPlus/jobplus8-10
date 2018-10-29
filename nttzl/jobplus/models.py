@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -47,6 +47,12 @@ class User(Base, UserMixin):
 
     def __repr__(self):
         return '<User:{}>'.format(self.name)
+    
+    @property
+    def enable_jobs(self):
+        if not self.is_company:
+            raise AttributeError('User has no attribute enable_jobs')
+        return self.jobs.filter(Job.is_disable.is_(False))
 
     @property
     def password(self):
@@ -162,6 +168,7 @@ class Job(Base):
     company_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     company = db.relationship('User', uselist=False, backref=db.backref('jobs', lazy='dynamic'))
     views_count = db.Column(db.Integer, default=0)
+    is_disable = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return '<Job {}>'.format(self.name)
@@ -170,6 +177,10 @@ class Job(Base):
     def tag_list(self):
         return self.tags.split(',')
 
+    @property
+    def current_user_is_applied(self):
+        d = Delivery.query.filter_by(job_id=self.id, user_id=current_user.id).first()
+        return (d is not None)
 
 class Delivery(Base):
     __tablename__ = 'delivery'

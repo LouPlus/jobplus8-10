@@ -7,7 +7,8 @@
     <div class="col-md-3">
         <h4>Administration</h4>
         <div class="list-group">
-            <a href="{{ url_for('admin.users') }}" class='list-group-item'>USERS</a>
+            <a href="{{ url_for('admin.users') }}" class="list-group-item">USERS</a>
+            <a href="{{ url_for('admin.jobs') }}" class="list-group-item">Jobs</a>
         </div>
 
         {% block operation %}{% endblock %}

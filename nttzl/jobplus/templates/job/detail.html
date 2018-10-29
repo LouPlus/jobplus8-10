@@ -11,9 +11,9 @@
     <div class="col-md-4">
       {% if current_user.is_authenticated %}
         {% if not job.current_user_is_applied %}
-          <a href="{{ url_for('job.apply', job_id=job.id) }}"class="btn btn-success btn-lg dilivery-btn">deliver resume</a>
+          <a href="{{ url_for('job.apply', job_id=job.id) }}"class="btn btn-success btn-lg delivery-btn">deliver resume</a>
         {% else %}
-          <a href="#"class="btn btn-success btn-lg dilivery-btn" disabled="disabled">delivered</a>
+          <a href="#"class="btn btn-success btn-lg delivery-btn" disabled="disabled">delivered</a>
         {% endif %}
       {% endif %}
     </div>
@@ -43,7 +43,7 @@
 </div>
 
   <h4>{{ job.company.name }}</h4>
-  <p>field{ job.company.detail.field }}</p>
+  <p>field{{ job.company.detail.field }}</p>
   <p>finance stage{{ job.company.detail.finance_stage }}</p>
   <p>location{{ job.company.detail.location }}</p>
 </div>
