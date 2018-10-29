@@ -69,12 +69,38 @@ def admin_apply(company_id):
         q = q.filter(Delivery.status==Delivery.STATUS_WAITING)
     elif status == 'accept':
         q = q.filter(Delivery.status==Delivery.STATUS_ACCEPT)
+    elif status == 'reject':
+        q = q.filter(Delivery.status==Delivery.STATUS_REJECT)
     pagination = q.order_by(Delivery.created_at.desc()).paginate(
             page=page,
             per_page=current_app.config['ADMIN_PER_PAGE'],
             error_out=False
             )
     return render_template('company/admin_apply.html', pagination=pagination, company_id=company_id)
+
+@company.route('/<int:company_id>/admin/apply/<int:delivery_id>/reject/')
+@login_required
+def admin_apply_reject(company_id, delivery_id):
+    d = Delivery.query.get_or_404(delivery_id)
+    if current_user.id != company_id:
+        abort(404)
+    d.status = Delivery.STATUS_REJECT
+    flash('Reject Resume', 'success')
+    db.session.add(d)
+    db.session.commit()
+    return redirect(url_for('company.admin_apply', company_id=company_id))
+
+@company.route('/<int:company_id>/admin/apply/<int:delivery_id>/accept/')
+@login_required
+def admin_apply_accept(company_id, delivery_id):
+    d = Delivery.query.get_or_404(delivery_id)
+    if current_user.id != company_id:
+        abort(404)
+    d.status = Delivery.STATUS_ACCEPT
+    flash('Arrange Invitation', 'success')
+    db.session.add(d)
+    db.session.commit()
+    return redirect(url_for('company.admin_apply', company_id=company_id))
 
 @company.route('/<int:company_id>/admin/publish_job/', methods=['GET', 'POST'])
 @login_required
