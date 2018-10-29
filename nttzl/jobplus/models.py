@@ -194,3 +194,4 @@ class Delivery(Base):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='SET NULL'))
     status = db.Column(db.SmallInteger, default=STATUS_WAITING)
     response = db.Column(db.String(256))
+    company_id = db.Column(db.Integer)
