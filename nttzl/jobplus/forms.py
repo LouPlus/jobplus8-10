@@ -1,6 +1,9 @@
+import os
+from flask import url_for
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired
 from wtforms import StringField, SelectField, TextAreaField, PasswordField, SubmitField, BooleanField, ValidationError, IntegerField, TextField
-from jobplus.models import db, User, Company
+from jobplus.models import db, User, Company, Job
 from wtforms.validators import Required,Length,Email,EqualTo
 
 
